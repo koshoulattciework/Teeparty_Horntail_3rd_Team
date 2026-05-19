@@ -3,14 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <title>行前說明</title>
+
   <style>
     body {
       margin: 0;
       background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    /* 🔝 Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 24px;
+      background: #1f1f1f;
+      border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 16px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    /* 🖼️ Gallery */
+    .gallery {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+
     img {
       width: 90%;
       max-width: 1000px;
@@ -19,29 +57,49 @@
     }
   </style>
 </head>
+
 <body>
 
-  <img src="images/1.png">
-  <img src="images/2.png">
-  <img src="images/3.png">
-  <a href="https://www.youtube.com/watch?v=sr6nI1_JVxU&t=770s" target="_blank" rel="noopener noreferrer">
-    <img src="images/4.png">
-  </a>
-  <img src="images/5.png">
-  <img src="images/6.png">
-  <img src="images/7.png">
-  <img src="images/8.png">
-  <img src="images/9.png">
-  <img src="images/10.png">
-  <img src="images/11.png">
-  <img src="images/12.png">
-  <a href="https://www.youtube.com/watch?v=sr6nI1_JVxU&t=1886s" target="_blank" rel="noopener noreferrer">
-    <img src="images/13.png">
-  </a>
-  <a href="https://www.youtube.com/watch?v=sr6nI1_JVxU&t=1720s" target="_blank" rel="noopener noreferrer">
-    <img src="images/14.png">
-  </a>
-  <img src="images/15.png">
+  <!-- 🔝 Navbar -->
+  <div class="navbar">
+    <div class="logo">📁 Teeparty 暗黑龍王三團</div>
+    <div class="nav-links">
+      <a href="index.html">首頁</a>
+      <a href="prepare.html">行前說明</a>
+    </div>
+  </div>
+
+  <!-- 🖼️ Gallery -->
+  <div class="gallery">
+
+    <img src="images/1.png">
+    <img src="images/2.png">
+    <img src="images/3.png">
+
+    <a href="https://www.youtube.com/watch?v=sr6nI1_JVxU&t=770s" target="_blank" rel="noopener noreferrer">
+      <img src="images/4.png">
+    </a>
+
+    <img src="images/5.png">
+    <img src="images/6.png">
+    <img src="images/7.png">
+    <img src="images/8.png">
+    <img src="images/9.png">
+    <img src="images/10.png">
+    <img src="images/11.png">
+    <img src="images/12.png">
+
+    <a href="https://www.youtube.com/watch?v=sr6nI1_JVxU&t=1886s" target="_blank" rel="noopener noreferrer">
+      <img src="images/13.png">
+    </a>
+
+    <a href="https://www.youtube.com/watch?v=sr6nI1_JVxU&t=1720s" target="_blank" rel="noopener noreferrer">
+      <img src="images/14.png">
+    </a>
+
+    <img src="images/15.png">
+
+  </div>
 
 </body>
 </html>

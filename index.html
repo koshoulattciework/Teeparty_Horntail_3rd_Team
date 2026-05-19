@@ -5,36 +5,88 @@
   <title>Home</title>
   <style>
     body {
+      margin: 0;
       background: #111;
       color: white;
-      font-family: Arial;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
+      font-family: Arial, sans-serif;
     }
 
-    a {
+    /* 🔝 Top Bar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 24px;
+      background: #1f1f1f;
+      border-bottom: 1px solid #333;
+      position: sticky;
+      top: 0;
+    }
+
+    .logo {
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .nav-links a {
       color: white;
       text-decoration: none;
-      font-size: 24px;
-      padding: 12px 20px;
-      border: 1px solid white;
-      border-radius: 8px;
+      margin-left: 16px;
+      font-size: 14px;
+      opacity: 0.8;
     }
 
-    a:hover {
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    /* 🧱 主內容 */
+    .container {
+      height: calc(100vh - 60px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 40px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border: 1px solid white;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
       background: white;
       color: black;
     }
   </style>
 </head>
+
 <body>
 
-  <h1>行前說明</h1>
+  <!-- 🔝 Navbar -->
+  <div class="navbar">
+    <div class="logo">📁 Teeparty 暗黑龍王三團</div>
+    <div class="nav-links">
+      <a href="index.html">首頁</a>
+      <a href="prepare.html">行前說明</a>
+    </div>
+  </div>
 
-  <a href="prepare.html">👉 Enter Gallery</a>
+  <!-- 🧭 Main -->
+  <div class="container">
+    <div class="title">Welcome 👋</div>
+  </div>
 
 </body>
 </html>
