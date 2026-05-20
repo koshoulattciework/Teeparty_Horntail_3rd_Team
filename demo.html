@@ -162,6 +162,35 @@ body {
   background: #333;
 }
 
+#bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#bgLeft {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: #9b9b9b;
+}
+
+#bgCenter {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: #111;
+}
+
+#bgRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background: #9b9b9b;
+}
 </style>
 </head>
 
@@ -179,10 +208,14 @@ body {
 </div>
 
 <div id="game">
-
+  <div id="bg">
+    <div id="bgLeft"></div>
+    <div id="bgCenter"></div>
+    <div id="bgRight"></div>
+  </div>
   <div id="startScreen">
     <div class="panel">
-      <h1>⚔ Boss 練習模式</h1>
+      <h1>⚔ 練習模式</h1>
       <p>⬅ ➡ 移動</p>
       <p>Z 跳躍</p>
       <button id="startBtn">START</button>
@@ -199,6 +232,30 @@ body {
 const redBiteInterval = 3000;
 const bambooShootInterval = 3000;
 const redLightningInterval = 6000;
+const arenaWidth = 180;
+const arenaLeft = (window.innerWidth - arenaWidth) / 2;
+const arenaRight = arenaLeft + arenaWidth;
+
+function updateBG() {
+
+  const left = document.getElementById("bgLeft");
+  const center = document.getElementById("bgCenter");
+  const right = document.getElementById("bgRight");
+
+  const width = window.innerWidth;
+
+  const centerWidth = arenaRight - arenaLeft;
+
+  left.style.width = arenaLeft + "px";
+
+  center.style.left = arenaLeft + "px";
+  center.style.width = centerWidth + "px";
+
+  right.style.width = (width - arenaRight) + "px";
+}
+
+updateBG();
+window.addEventListener("resize", updateBG);
 
 let gameStarted = false;
 
@@ -263,9 +320,10 @@ function update() {
     isGrounded = true;
   }
 
-  if (playerX < 0) playerX = 0;
-  if (playerX > window.innerWidth - 60)
-    playerX = window.innerWidth - 60;
+  if (playerX < arenaLeft) playerX = arenaLeft;
+
+  if (playerX > arenaRight - 60)
+    playerX = arenaRight - 60;
 
   player.style.left = playerX + "px";
   player.style.bottom = playerY + "px";
@@ -319,37 +377,33 @@ setInterval(() => {
 
   if (!gameStarted) return;
 
-  const count = Math.floor(Math.random() * 4) + 2;
+  const x = arenaLeft + Math.random() * (arenaRight - arenaLeft - 20);
 
-  for (let i = 0; i < count; i++) {
+  const spike = document.createElement("div");
+  spike.classList.add("spike");
+  spike.style.left = x + "px";
 
-    const x = Math.random() * (window.innerWidth - 20);
+  document.getElementById("game").appendChild(spike);
 
-    const spike = document.createElement("div");
-    spike.classList.add("spike");
-    spike.style.left = x + "px";
+  setTimeout(() => spike.classList.add("grow"), 50);
 
-    document.getElementById("game").appendChild(spike);
+  setTimeout(() => {
 
-    setTimeout(() => spike.classList.add("grow"), 50);
+    const lightning = document.createElement("div");
+    lightning.classList.add("lightning");
+
+    lightning.style.left = (x + 7) + "px";
+    lightning.style.height = (window.innerHeight - 180) + "px";
+
+    document.getElementById("game").appendChild(lightning);
 
     setTimeout(() => {
+      lightning.remove();
+      spike.remove();
+    }, 600);
 
-      const lightning = document.createElement("div");
-      lightning.classList.add("lightning");
-
-      lightning.style.left = (x + 7) + "px";
-      lightning.style.height = (window.innerHeight - 180) + "px";
-
-      document.getElementById("game").appendChild(lightning);
-
-      setTimeout(() => {
-        lightning.remove();
-        spike.remove();
-      }, 600);
-
-    }, 2500);
-  }
+  }, 2500);
+  
 
 }, bambooShootInterval);
 
@@ -358,7 +412,7 @@ setInterval(() => {
 
   if (!gameStarted) return;
 
-  const x = Math.random() * (window.innerWidth - 30);
+  const x = arenaLeft + Math.random() * (arenaRight - arenaLeft - 30);
 
   const warning = document.createElement("div");
 
