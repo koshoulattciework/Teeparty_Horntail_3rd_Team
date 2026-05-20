@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>練習模式</title>
+
+<style>
+
+body {
+  margin: 0;
+  background: #111;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
+  background: #1f1f1f;
+  border-bottom: 1px solid #333;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 16px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.nav-links a:hover {
+  opacity: 1;
+}
+
+#game {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 60px);
+  background: #111;
+  overflow: hidden;
+}
+
+#player {
+  position: absolute;
+  width: 40px;
+  height: 50px;
+  background: rgb(255, 255, 255);
+  bottom: 100px;
+  left: 300px;
+  border-radius: 10px;
+  z-index: 10;
+}
+
+/* red bite */
+.danger {
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  border: 3px solid red;
+  box-sizing: border-box;
+  z-index: 20;
+  overflow: hidden;
+}
+
+@keyframes redFlash {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+.danger.flash {
+  animation: redFlash 0.15s linear;
+}
+
+.danger::before,
+.danger::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  background: red;
+  transition: 0.15s linear;
+}
+
+.danger::before { top: -50%; }
+.danger::after { bottom: -50%; }
+
+.danger.active::before { top: 0; }
+.danger.active::after { bottom: 0; }
+
+/* bamboo shoot */
+.spike {
+  position: absolute;
+  width: 20px;
+  height: 0px;
+  background: yellow;
+  bottom: 100px;
+  border-radius: 10px 10px 0 0;
+  transition: height 0.5s;
+}
+
+.spike.grow {
+  height: 20px;
+}
+
+/* red lightning */
+.lightning {
+  position: absolute;
+  width: 6px;
+  background: cyan;
+  top: 0;
+  box-shadow: 0 0 20px cyan;
+}
+
+
+#startScreen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.88);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.panel {
+  text-align: center;
+  padding: 30px;
+  background: #222;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #000;
+}
+
+#startBtn {
+  margin-top: 20px;
+  padding: 10px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  background: red;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+#ground {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background: #333;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <div class="logo">📁 Teeparty 暗黑龍王三團</div>
+
+  <div class="nav-links">
+    <a href="index.html">首頁</a>
+    <a href="demo.html">練習模式</a>
+    <a href="team.html">隊伍分工</a>
+    <a href="prepare.html">行前說明</a>
+  </div>
+</div>
+
+<div id="game">
+
+  <div id="startScreen">
+    <div class="panel">
+      <h1>⚔ Boss 練習模式</h1>
+      <p>⬅ ➡ 移動</p>
+      <p>Z 跳躍</p>
+      <button id="startBtn">START</button>
+    </div>
+  </div>
+
+  <div id="ground"></div>
+  <div id="player"></div>
+
+</div>
+
+<script>
+
+const redBiteInterval = 3000;
+const bambooShootInterval = 3000;
+const redLightningInterval = 6000;
+
+let gameStarted = false;
+
+const player = document.getElementById("player");
+
+let playerX = 300;
+let playerY = 100;
+
+let velocityX = 0;
+let velocityY = 0;
+
+const gravity = 0.8;
+const moveSpeed = 0.3;
+const friction = 0.85;
+const jumpPower = 14;
+
+const groundY = 100;
+
+const keys = {
+  left: false,
+  right: false
+};
+
+let isGrounded = true;
+
+document.getElementById("startBtn").addEventListener("click", () => {
+  gameStarted = true;
+  document.getElementById("startScreen").style.display = "none";
+});
+
+document.addEventListener("keydown", (e) => {
+
+  if (e.key === "ArrowLeft") keys.left = true;
+  if (e.key === "ArrowRight") keys.right = true;
+
+  if ((e.key === "z" || e.key === "Z") && isGrounded) {
+    velocityY = jumpPower;
+    isGrounded = false;
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.key === "ArrowLeft") keys.left = false;
+  if (e.key === "ArrowRight") keys.right = false;
+});
+
+function update() {
+
+  if (keys.left) velocityX -= moveSpeed;
+  if (keys.right) velocityX += moveSpeed;
+
+  velocityX *= friction;
+
+  playerX += velocityX;
+
+  velocityY -= gravity;
+  playerY += velocityY;
+
+  if (playerY <= groundY) {
+    playerY = groundY;
+    velocityY = 0;
+    isGrounded = true;
+  }
+
+  if (playerX < 0) playerX = 0;
+  if (playerX > window.innerWidth - 60)
+    playerX = window.innerWidth - 60;
+
+  player.style.left = playerX + "px";
+  player.style.bottom = playerY + "px";
+
+  requestAnimationFrame(update);
+}
+update();
+
+// red bite
+setInterval(() => {
+
+  if (!gameStarted) return;
+
+  const danger = document.createElement("div");
+  danger.classList.add("danger");
+
+  danger.style.left = playerX + "px";
+  danger.style.bottom = playerY + "px";
+
+  document.getElementById("game").appendChild(danger);
+
+  let flashCount = 0;
+
+  const flash = setInterval(() => {
+
+    flashCount++;
+
+    danger.classList.remove("flash");
+    void danger.offsetWidth; 
+    danger.classList.add("flash");
+
+    if (flashCount >= 3) {
+
+      clearInterval(flash);
+
+      setTimeout(() => {
+        danger.classList.add("active");
+      }, 300);
+    }
+
+  }, 300);
+
+  setTimeout(() => {
+    danger.remove();
+  }, 1500);
+
+}, redBiteInterval);
+
+// bamboo shoot
+setInterval(() => {
+
+  if (!gameStarted) return;
+
+  const count = Math.floor(Math.random() * 4) + 2;
+
+  for (let i = 0; i < count; i++) {
+
+    const x = Math.random() * (window.innerWidth - 20);
+
+    const spike = document.createElement("div");
+    spike.classList.add("spike");
+    spike.style.left = x + "px";
+
+    document.getElementById("game").appendChild(spike);
+
+    setTimeout(() => spike.classList.add("grow"), 50);
+
+    setTimeout(() => {
+
+      const lightning = document.createElement("div");
+      lightning.classList.add("lightning");
+
+      lightning.style.left = (x + 7) + "px";
+      lightning.style.height = (window.innerHeight - 180) + "px";
+
+      document.getElementById("game").appendChild(lightning);
+
+      setTimeout(() => {
+        lightning.remove();
+        spike.remove();
+      }, 600);
+
+    }, 2500);
+  }
+
+}, bambooShootInterval);
+
+// red lightning
+setInterval(() => {
+
+  if (!gameStarted) return;
+
+  const x = Math.random() * (window.innerWidth - 30);
+
+  const warning = document.createElement("div");
+
+  warning.style.position = "absolute";
+  warning.style.left = (x + 15) + "px";
+  warning.style.top = "0px";
+  warning.style.width = "4px";
+  warning.style.height = window.innerHeight + "px";
+  warning.style.background = "red";
+  warning.style.zIndex = "25";
+  warning.style.boxShadow = "0 0 10px red";
+  warning.style.opacity = "1";
+
+  document.getElementById("game").appendChild(warning);
+
+  let count = 0;
+
+  const flash = setInterval(() => {
+
+    count++;
+
+    warning.style.opacity = "0.2";
+
+    setTimeout(() => {
+      warning.style.opacity = "1";
+    }, 120);
+
+    if (count >= 3) {
+
+      clearInterval(flash);
+
+      setTimeout(() => {
+
+        warning.remove();
+
+        const lightning = document.createElement("div");
+
+        lightning.style.position = "absolute";
+        lightning.style.left = x + "px";
+        lightning.style.top = "0px";
+        lightning.style.width = "35px";
+        lightning.style.height = window.innerHeight + "px";
+        lightning.style.background = "rgba(255,0,0,0.9)";
+        lightning.style.zIndex = "30";
+        lightning.style.boxShadow = "0 0 30px red";
+
+        document.getElementById("game").appendChild(lightning);
+
+        setTimeout(() => lightning.remove(), 400);
+
+      }, 200);
+    }
+
+  }, 250);
+
+}, redLightningInterval);
+
+</script>
+
+</body>
+</html>
