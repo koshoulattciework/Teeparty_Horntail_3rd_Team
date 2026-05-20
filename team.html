@@ -41,17 +41,39 @@
       opacity: 1;
     }
 
-    .gallery {
+    .table-wrap {
+      padding: 20px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      justify-content: center;
     }
 
-    img {
-      width: 90%;
-      max-width: 1000px;
-      margin: 20px 0;
+    table {
+      width: 95%;
+      max-width: 1200px;
+      border-collapse: collapse;
+      background: #1a1a1a;
       border-radius: 10px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 1px solid #333;
+      padding: 10px;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    th {
+      background: #222;
+      text-align: left;
+    }
+
+    tr:nth-child(even) {
+      background: #161616;
+    }
+
+    .teamLeader {
+      background: #cca041;
     }
   </style>
 </head>
@@ -68,9 +90,156 @@
     </div>
   </div>
 
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>職業</th>
+          <th>等級</th>
+          <th>拓荒分隊</th>
+          <th>隊伍</th>
+          <th>魅惑順位</th>
+          <th>主要負責</th>
+          <th>時間</th>
+        </tr>
+      </thead>
 
-  <div class="gallery">
-    <img src="images/team.png">
+      <tbody>
+        <tr>
+          <td>歪比吧噗</td>
+          <td>聖騎士</td>
+          <td>174</td>
+          <td>拓荒隊3</td>
+          <td>隊伍1</td>
+          <td></td>
+          <td>基本上站位跟農夫綁在一起<br>轉屬後YYDS</td>
+          <td>周一至周五 20:00後</td>
+        </tr>
+
+        <tr>
+          <td>麻糬</td>
+          <td>箭神</td>
+          <td>166</td>
+          <td>拓荒隊3</td>
+          <td>隊伍1</td>
+          <td>4</td>
+          <td>右下站發呆位<br>數黑色鎖鏈</td>
+          <td>輪班制（依班表）</td>
+        </tr>
+
+        <tr>
+          <td>企鵝</td>
+          <td>槍神</td>
+          <td>164</td>
+          <td>拓荒隊3</td>
+          <td>隊伍1</td>
+          <td>2</td>
+          <td>右上發呆位</td>
+          <td>平日 21:00後 / 假日9:00後</td>
+        </tr>
+
+        <tr>
+          <td>農夫</td>
+          <td>火毒</td>
+          <td>157</td>
+          <td>拓荒隊3</td>
+          <td>隊伍1</td>
+          <td>3</td>
+          <td>轉屬<br>需要時幫忙定龍進祭壇</td>
+          <td>週末9點 / 平日不固定</td>
+        </tr>
+
+        <tr class="teamLeader">
+          <td>RubyZhe</td>
+          <td>黑騎士</td>
+          <td>155</td>
+          <td>拓荒隊3</td>
+          <td>隊伍1</td>
+          <td></td>
+          <td>二煙：置換完+黑哥<br>推龍進祭壇</td>
+          <td>20:00 - 23:30</td>
+        </tr>
+
+        <tr>
+          <td>黑哥</td>
+          <td>刀賊</td>
+          <td>140</td>
+          <td>拓荒隊3</td>
+          <td>隊伍1</td>
+          <td></td>
+          <td>一煙(尾)<br>三煙(尾)</td>
+          <td>21:00後</td>
+        </tr>
+
+        <tr class="teamLeader">
+          <td>九歌</td>
+          <td>黑騎士</td>
+          <td>163</td>
+          <td>拓荒隊3</td>
+          <td>隊伍2</td>
+          <td></td>
+          <td>二煙：踢5566 + 黑哥</td>
+          <td>平日19:00後 / 假日全天</td>
+        </tr>
+
+        <tr>
+          <td>海豹</td>
+          <td>刀賊</td>
+          <td>162</td>
+          <td>拓荒隊3</td>
+          <td>隊伍2</td>
+          <td></td>
+          <td>二煙(尾)<br>四煙(大閃)</td>
+          <td>14:00 - 02:00</td>
+        </tr>
+
+        <tr>
+          <td>5566</td>
+          <td>英雄</td>
+          <td>181</td>
+          <td>拓荒隊3</td>
+          <td>隊伍2</td>
+          <td></td>
+          <td>龍頭斬殺者</td>
+          <td>輪班制</td>
+        </tr>
+
+        <tr>
+          <td>新鮮美味可口</td>
+          <td>神射手</td>
+          <td>166</td>
+          <td>拓荒隊3</td>
+          <td>隊伍2</td>
+          <td></td>
+          <td>龍尾斷前停手?</td>
+          <td>平日20:00後 / 假日可配合</td>
+        </tr>
+
+        <tr>
+          <td>善良a箭神</td>
+          <td>箭神</td>
+          <td>166</td>
+          <td>拓荒隊3</td>
+          <td>隊伍2</td>
+          <td></td>
+          <td>斷尾後左手左頭</td>
+          <td>平日21:00 / 假日全天</td>
+        </tr>
+
+        <tr>
+          <td>狗運超人</td>
+          <td>拳霸</td>
+          <td>151</td>
+          <td>拓荒隊3</td>
+          <td>隊伍2</td>
+          <td>1</td>
+          <td>控龍<br>與 Ruby 配合進祭壇</td>
+          <td>平日19:00後 / 假日12:00-00:00</td>
+        </tr>
+
+      </tbody>
+    </table>
   </div>
 
 </body>
